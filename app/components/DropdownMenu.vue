@@ -1,65 +1,65 @@
 <script setup lang="ts">
 export interface MenuItem {
-  label: string
-  icon?: Component
-  shortcut?: string[]
-  action?: () => void
-  children?: MenuItem[]
-  separator?: boolean
+  label: string;
+  icon?: Component;
+  shortcut?: string[];
+  action?: () => void;
+  children?: MenuItem[];
+  separator?: boolean;
 }
 
 defineProps<{
-  label: string
-  items: MenuItem[]
-}>()
+  label: string;
+  items: MenuItem[];
+}>();
 
-const uid = Symbol()
-const open = ref(false)
-const expandedIndex = ref<number | null>(null)
+const uid = Symbol();
+const open = ref(false);
+const expandedIndex = ref<number | null>(null);
 
 function toggle() {
   if (open.value) {
-    close()
+    close();
   } else {
     // Close all other dropdowns first
-    window.dispatchEvent(new CustomEvent('dropdown:close', { detail: uid }))
-    open.value = true
+    window.dispatchEvent(new CustomEvent("dropdown:close", { detail: uid }));
+    open.value = true;
   }
-  expandedIndex.value = null
+  expandedIndex.value = null;
 }
 
 function close() {
-  open.value = false
-  expandedIndex.value = null
+  open.value = false;
+  expandedIndex.value = null;
 }
 
 function onDropdownClose(e: Event) {
-  const detail = (e as CustomEvent).detail
-  if (detail !== uid) close()
+  const detail = (e as CustomEvent).detail;
+  if (detail !== uid) close();
 }
 
 function handleItem(item: MenuItem) {
-  if (item.children) return
-  item.action?.()
-  close()
+  if (item.children) return;
+  item.action?.();
+  close();
 }
 
 function onMouseEnter(index: number, item: MenuItem) {
   if (item.children) {
-    expandedIndex.value = index
+    expandedIndex.value = index;
   } else {
-    expandedIndex.value = null
+    expandedIndex.value = null;
   }
 }
 
 onMounted(() => {
-  window.addEventListener('click', close)
-  window.addEventListener('dropdown:close', onDropdownClose)
-})
+  window.addEventListener("click", close);
+  window.addEventListener("dropdown:close", onDropdownClose);
+});
 onUnmounted(() => {
-  window.removeEventListener('click', close)
-  window.removeEventListener('dropdown:close', onDropdownClose)
-})
+  window.removeEventListener("click", close);
+  window.removeEventListener("dropdown:close", onDropdownClose);
+});
 </script>
 
 <template>
@@ -78,13 +78,10 @@ onUnmounted(() => {
     >
       <template v-for="(item, i) in items" :key="i">
         <div v-if="item.separator" class="h-px bg-gray-700 my-1" />
-        <div
-          v-else
-          class="relative"
-          @mouseenter="onMouseEnter(i, item)"
-        >
+        <div v-else class="relative" @mouseenter="onMouseEnter(i, item)">
           <button
-            class="w-full text-left px-3 py-1.5 text-xs text-gray-300 hover:bg-gray-700 hover:text-white transition-colors flex items-center gap-2"
+            class="w-full text-left mx-1 px-2 py-1.5 text-xs text-gray-300 hover:bg-gray-800/80 hover:text-white rounded-md transition-colors flex items-center gap-2"
+            style="width: calc(100% - 0.5rem)"
             @click="handleItem(item)"
           >
             <component
@@ -118,7 +115,8 @@ onUnmounted(() => {
               <div v-if="child.separator" class="h-px bg-gray-700 my-1" />
               <button
                 v-else
-                class="w-full text-left px-3 py-1.5 text-xs text-gray-300 hover:bg-gray-700 hover:text-white transition-colors flex items-center gap-2"
+                class="w-full text-left mx-1 px-2 py-1.5 text-xs text-gray-300 hover:bg-gray-600/60 hover:text-white rounded-md transition-colors flex items-center gap-2"
+                style="width: calc(100% - 0.5rem)"
                 @click="handleItem(child)"
               >
                 <component

@@ -129,6 +129,7 @@ export const usePipelineStore = defineStore('pipeline', () => {
     } as Node)
 
     isDirty.value = true
+    selectedNodeId.value = id
     return id
   }
 
@@ -194,7 +195,7 @@ export const usePipelineStore = defineStore('pipeline', () => {
         type: 'outline',
         position: { x: 950, y: 200 },
         label: 'Outline',
-        data: { params: { ...DEFAULT_PARAMS['outline'] } },
+        data: { params: { thickness: 22, color: '#ffffff', opacity: 1, quality: 'high', position: 'outside', threshold: 2.5 } },
       },
       {
         id: outputId,

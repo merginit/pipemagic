@@ -30,7 +30,7 @@ const nodeTypes = {
 
 const store = usePipelineStore()
 
-const { onNodeClick, onPaneClick, onConnect, project } = useVueFlow()
+const { onNodeClick, onPaneClick, onConnect, project, setCenter, getViewport } = useVueFlow()
 
 // Sync selection
 onNodeClick(({ node }) => {
@@ -77,6 +77,21 @@ function addNodeFromMenu(type: NodeType) {
 function closeContextMenu() {
   contextMenu.value.show = false
 }
+
+// Pan camera to newly added nodes
+let prevNodeCount = 0
+watch(() => store.nodes.length, (len) => {
+  if (len > prevNodeCount && prevNodeCount > 0) {
+    const node = store.nodes[len - 1]
+    if (node) {
+      nextTick(() => {
+        const { zoom } = getViewport()
+        setCenter(node.position.x + 90, node.position.y + 100, { duration: 300, zoom })
+      })
+    }
+  }
+  prevNodeCount = len
+}, { immediate: true })
 </script>
 
 <template>

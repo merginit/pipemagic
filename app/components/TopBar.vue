@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nanoid } from 'nanoid'
+import { nanoid } from "nanoid";
 import {
   DocumentPlusIcon,
   FolderOpenIcon,
@@ -9,136 +9,238 @@ import {
   ArrowsPointingInIcon,
   ArrowsPointingOutIcon,
   PaintBrushIcon,
-} from '@heroicons/vue/20/solid'
-import type { NodeType } from '~~/shared/types/pipeline'
-import { usePipelineStore } from '~/stores/pipeline'
-import { useFileIo } from '~/composables/useFileIo'
-import { usePipelineRunner } from '~/composables/usePipelineRunner'
-import { DEFAULT_PARAMS } from '~~/shared/types/node-params'
-import type { PipelineDefinition } from '~~/shared/types/pipeline'
-import type { MenuItem } from '~/components/DropdownMenu.vue'
+} from "@heroicons/vue/20/solid";
+import type { NodeType } from "~~/shared/types/pipeline";
+import { usePipelineStore } from "~/stores/pipeline";
+import { useFileIo } from "~/composables/useFileIo";
+import { usePipelineRunner } from "~/composables/usePipelineRunner";
+import { DEFAULT_PARAMS } from "~~/shared/types/node-params";
+import type { PipelineDefinition } from "~~/shared/types/pipeline";
+import type { MenuItem } from "~/components/DropdownMenu.vue";
 
-const store = usePipelineStore()
-const { savePipeline, savePipelineAs, openPipeline, newPipeline } = useFileIo()
-const { run: runPipeline, stop, runError } = usePipelineRunner()
+const store = usePipelineStore();
+const { savePipeline, savePipelineAs, openPipeline, newPipeline } = useFileIo();
+const { run: runPipeline, stop, runError } = usePipelineRunner();
 
-const highlightRun = computed(() =>
-  store.inputImages.size > 0 && !store.hasRun && !store.isRunning,
-)
+const highlightRun = computed(
+  () => store.inputImages.size > 0 && !store.hasRun && !store.isRunning,
+);
 
 async function run() {
   try {
-    store.hasRun = true
-    await runPipeline()
+    store.hasRun = true;
+    await runPipeline();
   } catch (e: any) {
-    console.error('Pipeline run error:', e)
+    console.error("Pipeline run error:", e);
   }
 }
 
-const gpuSupported = ref(false)
+const gpuSupported = ref(false);
 onMounted(async () => {
-  gpuSupported.value = !!navigator.gpu && !!(await navigator.gpu.requestAdapter())
-})
+  gpuSupported.value =
+    !!navigator.gpu && !!(await navigator.gpu.requestAdapter());
+});
 
 // Presets
 function buildOutlinePreset(): PipelineDefinition {
-  const inputId = nanoid(8)
-  const removeBgId = nanoid(8)
-  const normalizeId = nanoid(8)
-  const outlineId = nanoid(8)
-  const outputId = nanoid(8)
+  const inputId = nanoid(8);
+  const removeBgId = nanoid(8);
+  const normalizeId = nanoid(8);
+  const outlineId = nanoid(8);
+  const outputId = nanoid(8);
   return {
     version: 1,
     nodes: [
-      { id: inputId, type: 'input', position: { x: 60, y: 200 }, params: { ...DEFAULT_PARAMS['input'] }, label: 'Image Input' },
-      { id: removeBgId, type: 'remove-bg', position: { x: 360, y: 200 }, params: { ...DEFAULT_PARAMS['remove-bg'] }, label: 'Remove BG' },
-      { id: normalizeId, type: 'normalize', position: { x: 660, y: 200 }, params: { ...DEFAULT_PARAMS['normalize'] }, label: 'Normalize' },
-      { id: outlineId, type: 'outline', position: { x: 960, y: 200 }, params: { thickness: 22, color: '#ffffff', opacity: 1, quality: 'high', position: 'outside', threshold: 2.5 }, label: 'Outline' },
-      { id: outputId, type: 'output', position: { x: 1260, y: 200 }, params: { ...DEFAULT_PARAMS['output'] }, label: 'Output' },
+      {
+        id: inputId,
+        type: "input",
+        position: { x: 60, y: 200 },
+        params: { ...DEFAULT_PARAMS["input"] },
+        label: "Image Input",
+      },
+      {
+        id: removeBgId,
+        type: "remove-bg",
+        position: { x: 360, y: 200 },
+        params: { ...DEFAULT_PARAMS["remove-bg"] },
+        label: "Remove BG",
+      },
+      {
+        id: normalizeId,
+        type: "normalize",
+        position: { x: 660, y: 200 },
+        params: { ...DEFAULT_PARAMS["normalize"] },
+        label: "Normalize",
+      },
+      {
+        id: outlineId,
+        type: "outline",
+        position: { x: 960, y: 200 },
+        params: {
+          thickness: 22,
+          color: "#ffffff",
+          opacity: 1,
+          quality: "high",
+          position: "outside",
+          threshold: 2.5,
+        },
+        label: "Outline",
+      },
+      {
+        id: outputId,
+        type: "output",
+        position: { x: 1260, y: 200 },
+        params: { ...DEFAULT_PARAMS["output"] },
+        label: "Output",
+      },
     ],
     edges: [
-      { id: nanoid(8), source: inputId, sourceHandle: 'output', target: removeBgId, targetHandle: 'input' },
-      { id: nanoid(8), source: removeBgId, sourceHandle: 'output', target: normalizeId, targetHandle: 'input' },
-      { id: nanoid(8), source: normalizeId, sourceHandle: 'output', target: outlineId, targetHandle: 'input' },
-      { id: nanoid(8), source: outlineId, sourceHandle: 'output', target: outputId, targetHandle: 'input' },
+      {
+        id: nanoid(8),
+        source: inputId,
+        sourceHandle: "output",
+        target: removeBgId,
+        targetHandle: "input",
+      },
+      {
+        id: nanoid(8),
+        source: removeBgId,
+        sourceHandle: "output",
+        target: normalizeId,
+        targetHandle: "input",
+      },
+      {
+        id: nanoid(8),
+        source: normalizeId,
+        sourceHandle: "output",
+        target: outlineId,
+        targetHandle: "input",
+      },
+      {
+        id: nanoid(8),
+        source: outlineId,
+        sourceHandle: "output",
+        target: outputId,
+        targetHandle: "input",
+      },
     ],
-  }
+  };
 }
 
 function loadPreset(build: () => PipelineDefinition) {
-  store.loadPipeline(build())
-  store.fileHandle = null
-  store.fileName = null
+  store.loadPipeline(build());
+  store.fileHandle = null;
+  store.fileName = null;
 }
 
 const fileMenuItems = computed<MenuItem[]>(() => [
-  { label: 'New', icon: DocumentPlusIcon, shortcut: ['⌘', 'N'], action: newPipeline },
-  { label: 'Open...', icon: FolderOpenIcon, shortcut: ['⌘', 'O'], action: openPipeline },
-  { separator: true, label: '' },
-  { label: 'Save', icon: ArrowDownTrayIcon, shortcut: ['⌘', 'S'], action: savePipeline },
-  { label: 'Save As...', icon: DocumentDuplicateIcon, shortcut: ['⇧', '⌘', 'S'], action: savePipelineAs },
-])
+  {
+    label: "New",
+    icon: DocumentPlusIcon,
+    shortcut: ["⌘", "N"],
+    action: newPipeline,
+  },
+  {
+    label: "Open...",
+    icon: FolderOpenIcon,
+    shortcut: ["⌘", "O"],
+    action: openPipeline,
+  },
+  { separator: true, label: "" },
+  {
+    label: "Save",
+    icon: ArrowDownTrayIcon,
+    shortcut: ["⌘", "S"],
+    action: savePipeline,
+  },
+  {
+    label: "Save As...",
+    icon: DocumentDuplicateIcon,
+    shortcut: ["⇧", "⌘", "S"],
+    action: savePipelineAs,
+  },
+]);
 
 const presetMenuItems = computed<MenuItem[]>(() => [
-  { label: 'Outline', action: () => loadPreset(buildOutlinePreset) },
-])
+  { label: "Outline", action: () => loadPreset(buildOutlinePreset) },
+]);
 
 function addNodeAtCenter(type: NodeType) {
   // Place below and to the right of the rightmost node to avoid overlaps
-  let maxX = 0
-  let maxY = 0
+  let maxX = 0;
+  let maxY = 0;
   for (const n of store.nodes) {
-    if (n.position.x > maxX) maxX = n.position.x
-    if (n.position.y > maxY) maxY = n.position.y
+    if (n.position.x > maxX) maxX = n.position.x;
+    if (n.position.y > maxY) maxY = n.position.y;
   }
-  store.addNode(type, { x: maxX + 300, y: maxY })
+  store.addNode(type, { x: maxX + 300, y: maxY });
 }
 
 const addNodeItems = computed<MenuItem[]>(() => [
-  { label: 'Remove BG', icon: ScissorsIcon, action: () => addNodeAtCenter('remove-bg') },
-  { label: 'Normalize', icon: ArrowsPointingInIcon, action: () => addNodeAtCenter('normalize') },
-  { label: 'Outline', icon: PaintBrushIcon, action: () => addNodeAtCenter('outline') },
-  { label: 'Upscale 2x', icon: ArrowsPointingOutIcon, action: () => addNodeAtCenter('upscale') },
-])
+  {
+    label: "Remove BG",
+    icon: ScissorsIcon,
+    action: () => addNodeAtCenter("remove-bg"),
+  },
+  {
+    label: "Normalize",
+    icon: ArrowsPointingInIcon,
+    action: () => addNodeAtCenter("normalize"),
+  },
+  {
+    label: "Outline",
+    icon: PaintBrushIcon,
+    action: () => addNodeAtCenter("outline"),
+  },
+  {
+    label: "Upscale 2x",
+    icon: ArrowsPointingOutIcon,
+    action: () => addNodeAtCenter("upscale"),
+  },
+]);
 
 function handleKeyboard(e: KeyboardEvent) {
-  const mod = e.metaKey || e.ctrlKey
-  if (mod && e.key === 's') {
-    e.preventDefault()
-    if (e.shiftKey) savePipelineAs()
-    else savePipeline()
+  const mod = e.metaKey || e.ctrlKey;
+  if (mod && e.key === "s") {
+    e.preventDefault();
+    if (e.shiftKey) savePipelineAs();
+    else savePipeline();
   }
-  if (mod && e.key === 'o') {
-    e.preventDefault()
-    openPipeline()
+  if (mod && e.key === "o") {
+    e.preventDefault();
+    openPipeline();
   }
-  if (mod && e.key === 'Enter') {
-    e.preventDefault()
-    if (store.isRunning) stop()
-    else run()
+  if (mod && e.key === "Enter") {
+    e.preventDefault();
+    if (store.isRunning) stop();
+    else run();
   }
-  if (e.key === 'Delete' || e.key === 'Backspace') {
-    if (store.selectedNodeId && !['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as Element)?.tagName)) {
-      store.removeNode(store.selectedNodeId)
+  if (e.key === "Delete" || e.key === "Backspace") {
+    if (
+      store.selectedNodeId &&
+      !["INPUT", "TEXTAREA", "SELECT"].includes((e.target as Element)?.tagName)
+    ) {
+      store.removeNode(store.selectedNodeId);
     }
   }
 }
 
 onMounted(() => {
-  window.addEventListener('keydown', handleKeyboard)
-})
+  window.addEventListener("keydown", handleKeyboard);
+});
 
 onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeyboard)
-})
+  window.removeEventListener("keydown", handleKeyboard);
+});
 </script>
 
 <template>
-  <div class="h-11 bg-gray-900 border-b border-gray-800 flex items-center px-3 gap-2 flex-shrink-0">
+  <div
+    class="h-11 bg-gray-900 border-b border-gray-800 flex items-center px-3 gap-2 flex-shrink-0"
+  >
+    <img src="/logo.svg" alt="PipeMagic" class="w-6 h-6" />
     <!-- Logo / Title -->
-    <span class="text-sm font-semibold text-gray-300 mr-4">
-      PipeMagic
-    </span>
+    <span class="text-sm font-semibold text-gray-300 mr-4"> PipeMagic </span>
 
     <!-- File menu -->
     <DropdownMenu label="File" :items="fileMenuItems" />
@@ -190,9 +292,13 @@ onUnmounted(() => {
   <Teleport to="body">
     <span
       class="fixed bottom-2 right-2 z-50 text-[10px] px-1.5 py-0.5 rounded"
-      :class="gpuSupported ? 'bg-green-900/30 text-green-400' : 'bg-yellow-900/30 text-yellow-400'"
+      :class="
+        gpuSupported
+          ? 'bg-green-900/30 text-green-400'
+          : 'bg-yellow-900/30 text-yellow-400'
+      "
     >
-      {{ gpuSupported ? 'WebGPU' : 'WASM' }}
+      {{ gpuSupported ? "WebGPU" : "WASM" }}
     </span>
   </Teleport>
 </template>
@@ -203,7 +309,12 @@ onUnmounted(() => {
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 8px rgba(83, 93, 255, 0.4); }
-  50% { box-shadow: 0 0 20px rgba(83, 93, 255, 0.7); }
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(83, 93, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(83, 93, 255, 0.7);
+  }
 }
 </style>
