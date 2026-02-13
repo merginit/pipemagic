@@ -28,7 +28,7 @@ async function getWebSR(
 ) {
   const key = `${model}-${contentType}`
 
-  const WebSR = (await import('@websr/websr')).default
+  const WebSR = (await import('~/utils/websr-shim')).default
 
   if (!gpuDevice) {
     onStatus?.('Initializing WebGPU...')
