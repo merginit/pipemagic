@@ -2,42 +2,38 @@
 
 Visual image processing pipeline editor that runs entirely in the browser. Build node-based pipelines to process images using AI models — no server required.
 
-**[Try it live](https://mo1app.github.io/pipemagic/)** · **[Example app](https://mo1app.github.io/pipemagic/example/)** · **[npm package](https://www.npmjs.com/package/pipemagic)**
+**[Node Editor](https://mo1app.github.io/pipemagic/)** · **[Example App](https://mo1app.github.io/pipemagic/example/)** · **[npm Package](https://www.npmjs.com/package/pipemagic)**
 
-## Features
-
-- **Node-based editor** — Drag-and-drop pipeline builder powered by Vue Flow
-- **Background removal** — AI-powered using RMBG-1.4 (via Hugging Face Transformers.js)
-- **Normalize** — Auto-crop and center subjects with configurable padding
-- **Outline** — GPU-accelerated outline generation using WebGPU (JFA algorithm)
-- **Upscale 2x** — AI upscaling with Real-ESRGAN
-- **Fully client-side** — All processing happens in-browser using WebGPU and WASM
-- **Save/Load** — Export and import pipelines as JSON files
-
-## Packages
-
-| Package | Description |
-|---------|-------------|
-| [`packages/runtime`](packages/runtime/) | Standalone pipeline runtime, published as [`pipemagic`](https://www.npmjs.com/package/pipemagic) on npm. Framework-agnostic — use it in any web app to run image processing pipelines. |
-| [`packages/example`](packages/example/) | Minimal demo app ([live](https://mo1app.github.io/pipemagic/example/)). Vanilla Vite + TypeScript, ~180 lines. Drop an image and it runs the full sticker pipeline. |
-| `app/` | The main PipeMagic editor UI — Nuxt 3 / Vue 3 app with Vue Flow, Pinia, and Tailwind CSS. Imports the runtime from `pipemagic`. |
-| `shared/types/` | TypeScript type definitions shared between the editor and the runtime. |
-
-## Using the runtime in your own app
-
-```sh
-npm install pipemagic
-```
+## Runtime example
 
 ```ts
-import { PipeMagic } from 'pipemagic'
+import { PipeMagic } from "pipemagic";
 
-const pm = new PipeMagic()
-const result = await pm.run(pipeline, imageFile)
+const pm = new PipeMagic();
+const result = await pm.run(
+  pipeline, // create these with the node edutor
+  imageFile,
+);
 // result.blob → output PNG
 ```
 
-See the [runtime README](packages/runtime/README.md) for the full API and node type docs.
+## Supported Nodes
+
+- **Input** — Resize and fit source images
+- **Remove BG** — AI background removal using [RMBG-1.4](https://huggingface.co/briaai/RMBG-1.4) via Transformers.js (WebGPU / WASM)
+- **Normalize** — Auto-crop to content bounding box, center on square canvas with padding
+- **Outline** — Configurable outline via Jump Flooding Algorithm on WebGPU, with canvas fallback
+- **Upscale 2x** — Super-resolution with [WebSR](https://github.com/nicknbytes/websr) (Anime4K CNN models)
+- **Output** — Encode to PNG / JPEG / WebP
+
+## Packages
+
+| Package                                 | Description                                                                                                                                                                            |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`packages/runtime`](packages/runtime/) | Standalone pipeline runtime, published as [`pipemagic`](https://www.npmjs.com/package/pipemagic) on npm. Framework-agnostic — use it in any web app to run image processing pipelines. |
+| [`packages/example`](packages/example/) | Minimal demo app ([live](https://mo1app.github.io/pipemagic/example/)). Vanilla Vite + TypeScript, ~180 lines. Drop an image and it runs the full sticker pipeline.                    |
+| `app/`                                  | The main PipeMagic editor UI — Nuxt 3 / Vue 3 app with Vue Flow, Pinia, and Tailwind CSS. Imports the runtime from `pipemagic`.                                                        |
+| `shared/types/`                         | TypeScript type definitions shared between the editor and the runtime.                                                                                                                 |
 
 ## Running locally
 
