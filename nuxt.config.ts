@@ -30,7 +30,6 @@ export default defineNuxtConfig({
       ],
       script: [
         { src: '/coi-serviceworker.min.js' },
-        { src: '/websr.js' },
       ],
     },
     spaLoadingTemplate: true,
