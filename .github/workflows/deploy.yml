@@ -21,12 +21,21 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: yarn
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --ignore-engines
+
+      # Build the runtime package (needed by both apps)
+      - run: yarn build:runtime
+
+      # Build the main Nuxt app
       - run: yarn generate
         env:
           NUXT_APP_BASE_URL: /pipemagic/
+
+      # Build the example app into the Nuxt output
+      - run: cd packages/example && npx vite build --base /pipemagic/example/ --outDir ../../.output/public/example
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .output/public
