@@ -31,10 +31,10 @@ jobs:
       # Build the main Nuxt app
       - run: yarn generate
         env:
-          NUXT_APP_BASE_URL: /pipemagic/
+          NUXT_APP_BASE_URL: /
 
       # Build the example app into the Nuxt output
-      - run: cd packages/example && npx vite build --base /pipemagic/example/ --outDir ../../.output/public/example
+      - run: cd packages/example && npx vite build --base /example/ --outDir ../../.output/public/example
 
       - uses: actions/upload-pages-artifact@v3
         with:

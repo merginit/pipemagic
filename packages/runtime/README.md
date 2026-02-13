@@ -4,7 +4,7 @@ Browser-based image processing pipeline runtime. Chain together GPU-accelerated 
 
 Learn more at the official repo [PipeMagic](https://github.com/mo1app/pipemagic).
 
-View the [node based editor](pipemagic.mo1.app).
+View the [node based editor](https://pipemagic.mo1.app).
 
 ## Install
 
@@ -39,7 +39,7 @@ const result = await pm.run(pipeline, imageFile, {
 
 Pipelines are JSON graphs of nodes and edges. Each node has a type, parameters, and connects to other nodes via edges.
 
-You can create them with the official [Node Editor](pipemagic.mo1.app).
+You can create them with the official [Node Editor](https://pipemagic.mo1.app).
 
 ## Node Types
 
