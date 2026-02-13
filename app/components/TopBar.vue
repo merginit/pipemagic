@@ -9,6 +9,7 @@ import {
   ArrowsPointingInIcon,
   ArrowsPointingOutIcon,
   PaintBrushIcon,
+  SparklesIcon,
 } from "@heroicons/vue/20/solid";
 import type { NodeType } from "~~/shared/types/pipeline";
 import { usePipelineStore } from "~/stores/pipeline";
@@ -58,11 +59,12 @@ onMounted(async () => {
 });
 
 // Presets
-function buildOutlinePreset(): PipelineDefinition {
+function buildStickerPreset(): PipelineDefinition {
   const inputId = nanoid(8);
   const removeBgId = nanoid(8);
   const normalizeId = nanoid(8);
   const outlineId = nanoid(8);
+  const upscaleId = nanoid(8);
   const outputId = nanoid(8);
   return {
     version: 1,
@@ -70,28 +72,28 @@ function buildOutlinePreset(): PipelineDefinition {
       {
         id: inputId,
         type: "input",
-        position: { x: 60, y: 200 },
-        params: { ...DEFAULT_PARAMS["input"] },
+        position: { x: 60, y: 180 },
+        params: { maxSize: 2048, fit: "contain" },
         label: "Image Input",
       },
       {
         id: removeBgId,
         type: "remove-bg",
-        position: { x: 360, y: 200 },
-        params: { ...DEFAULT_PARAMS["remove-bg"] },
+        position: { x: 380, y: 180 },
+        params: { threshold: 0.5, device: "auto", dtype: "fp16" },
         label: "Remove BG",
       },
       {
         id: normalizeId,
         type: "normalize",
-        position: { x: 660, y: 200 },
-        params: { ...DEFAULT_PARAMS["normalize"], padding: 160 },
+        position: { x: 680, y: 180 },
+        params: { size: 2048, padding: 160 },
         label: "Normalize",
       },
       {
         id: outlineId,
         type: "outline",
-        position: { x: 960, y: 200 },
+        position: { x: 940, y: 200 },
         params: {
           thickness: 50,
           color: "#ffffff",
@@ -103,9 +105,16 @@ function buildOutlinePreset(): PipelineDefinition {
         label: "Outline",
       },
       {
+        id: upscaleId,
+        type: "upscale",
+        position: { x: 1220, y: 200 },
+        params: { model: "cnn-2x-l", contentType: "rl" },
+        label: "Upscale 2x",
+      },
+      {
         id: outputId,
         type: "output",
-        position: { x: 1260, y: 200 },
+        position: { x: 1500, y: 180 },
         params: { ...DEFAULT_PARAMS["output"] },
         label: "Output",
       },
@@ -135,6 +144,13 @@ function buildOutlinePreset(): PipelineDefinition {
       {
         id: nanoid(8),
         source: outlineId,
+        sourceHandle: "output",
+        target: upscaleId,
+        targetHandle: "input",
+      },
+      {
+        id: nanoid(8),
+        source: upscaleId,
         sourceHandle: "output",
         target: outputId,
         targetHandle: "input",
@@ -178,7 +194,7 @@ const fileMenuItems = computed<MenuItem[]>(() => [
 ]);
 
 const presetMenuItems = computed<MenuItem[]>(() => [
-  { label: "Outline", action: () => loadPreset(buildOutlinePreset) },
+  { label: "Sticker", icon: SparklesIcon, action: () => loadPreset(buildStickerPreset) },
 ]);
 
 function addNodeAtCenter(type: NodeType) {

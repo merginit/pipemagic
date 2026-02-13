@@ -30,7 +30,7 @@ const nodeTypes = {
 
 const store = usePipelineStore()
 
-const { onNodeClick, onPaneClick, onConnect, project, setCenter, getViewport } = useVueFlow()
+const { onNodeClick, onPaneClick, onConnect, project, setCenter, getViewport, fitView } = useVueFlow()
 
 // Sync selection
 onNodeClick(({ node }) => {
@@ -78,10 +78,17 @@ function closeContextMenu() {
   contextMenu.value.show = false
 }
 
-// Pan camera to newly added nodes
+// Pan camera to newly added nodes (single add only)
 let prevNodeCount = 0
+let lastLoadCount = store.pipelineLoadCount
 watch(() => store.nodes.length, (len) => {
-  if (len > prevNodeCount && prevNodeCount > 0) {
+  // Skip when a bulk pipeline load just changed the node count
+  if (store.pipelineLoadCount !== lastLoadCount) {
+    lastLoadCount = store.pipelineLoadCount
+    prevNodeCount = len
+    return
+  }
+  if (len === prevNodeCount + 1 && prevNodeCount > 0) {
     const node = store.nodes[len - 1]
     if (node) {
       nextTick(() => {
@@ -92,6 +99,13 @@ watch(() => store.nodes.length, (len) => {
   }
   prevNodeCount = len
 }, { immediate: true })
+
+// Fit all nodes when a pipeline is loaded (preset, file open, default)
+watch(() => store.pipelineLoadCount, () => {
+  nextTick(() => {
+    fitView({ duration: 300, padding: 0.2 })
+  })
+})
 </script>
 
 <template>

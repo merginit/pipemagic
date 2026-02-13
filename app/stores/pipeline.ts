@@ -33,6 +33,9 @@ export const usePipelineStore = defineStore('pipeline', () => {
   const fileName = ref<string | null>(null)
   const isDirty = ref(false)
 
+  // Incremented on bulk pipeline loads (presets, file open, default) to signal fitView
+  const pipelineLoadCount = ref(0)
+
   // Computed
   const selectedNode = computed(() =>
     nodes.value.find(n => n.id === selectedNodeId.value) || null,
@@ -168,41 +171,49 @@ export const usePipelineStore = defineStore('pipeline', () => {
     const removeBgId = nanoid(8)
     const normalizeId = nanoid(8)
     const outlineId = nanoid(8)
+    const upscaleId = nanoid(8)
     const outputId = nanoid(8)
 
     nodes.value = [
       {
         id: inputId,
         type: 'input',
-        position: { x: 60, y: 200 },
+        position: { x: 60, y: 180 },
         label: 'Image Input',
         data: { params: { maxSize: 2048, fit: 'contain' } },
       },
       {
         id: removeBgId,
         type: 'remove-bg',
-        position: { x: 360, y: 200 },
+        position: { x: 380, y: 180 },
         label: 'Remove BG',
         data: { params: { threshold: 0.5, device: 'auto', dtype: 'fp16' } },
       },
       {
         id: normalizeId,
         type: 'normalize',
-        position: { x: 660, y: 200 },
+        position: { x: 680, y: 180 },
         label: 'Normalize',
-        data: { params: { size: 1024, padding: 160 } },
+        data: { params: { size: 2048, padding: 160 } },
       },
       {
         id: outlineId,
         type: 'outline',
-        position: { x: 960, y: 200 },
+        position: { x: 940, y: 200 },
         label: 'Outline',
         data: { params: { thickness: 50, color: '#ffffff', opacity: 1, quality: 'high', position: 'outside', threshold: 5 } },
       },
       {
+        id: upscaleId,
+        type: 'upscale',
+        position: { x: 1220, y: 200 },
+        label: 'Upscale 2x',
+        data: { params: { model: 'cnn-2x-l', contentType: 'rl' } },
+      },
+      {
         id: outputId,
         type: 'output',
-        position: { x: 1260, y: 200 },
+        position: { x: 1500, y: 180 },
         label: 'Output',
         data: { params: { format: 'png', quality: 0.92 } },
       },
@@ -212,7 +223,8 @@ export const usePipelineStore = defineStore('pipeline', () => {
       { id: nanoid(8), source: inputId, target: removeBgId, sourceHandle: 'output', targetHandle: 'input' },
       { id: nanoid(8), source: removeBgId, target: normalizeId, sourceHandle: 'output', targetHandle: 'input' },
       { id: nanoid(8), source: normalizeId, target: outlineId, sourceHandle: 'output', targetHandle: 'input' },
-      { id: nanoid(8), source: outlineId, target: outputId, sourceHandle: 'output', targetHandle: 'input' },
+      { id: nanoid(8), source: outlineId, target: upscaleId, sourceHandle: 'output', targetHandle: 'input' },
+      { id: nanoid(8), source: upscaleId, target: outputId, sourceHandle: 'output', targetHandle: 'input' },
     ] as Edge[]
 
     nodeStates.value = new Map()
@@ -221,6 +233,7 @@ export const usePipelineStore = defineStore('pipeline', () => {
     fileName.value = null
     isDirty.value = false
     selectedNodeId.value = null
+    pipelineLoadCount.value++
   }
 
   function serializePipeline(): PipelineDefinition {
@@ -284,6 +297,7 @@ export const usePipelineStore = defineStore('pipeline', () => {
 
     isDirty.value = false
     selectedNodeId.value = null
+    pipelineLoadCount.value++
   }
 
   // Persist pipeline to localStorage
@@ -323,6 +337,7 @@ export const usePipelineStore = defineStore('pipeline', () => {
     fileHandle,
     fileName,
     isDirty,
+    pipelineLoadCount,
     // Computed
     selectedNode,
     selectedNodeState,
