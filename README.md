@@ -2,7 +2,7 @@
 
 Visual image processing pipeline editor that runs entirely in the browser. Build node-based pipelines to process images using AI models — no server required.
 
-**[Try it live](https://mo1app.github.io/pipemagic/)**
+**[Try it live](https://mo1app.github.io/pipemagic/)** · **[Example app](https://mo1app.github.io/pipemagic/example/)** · **[npm package](https://www.npmjs.com/package/pipemagic)**
 
 ## Features
 
@@ -12,17 +12,32 @@ Visual image processing pipeline editor that runs entirely in the browser. Build
 - **Outline** — GPU-accelerated outline generation using WebGPU (JFA algorithm)
 - **Upscale 2x** — AI upscaling with Real-ESRGAN
 - **Fully client-side** — All processing happens in-browser using WebGPU and WASM
-- **Batch processing** — Drop multiple images onto the input node
 - **Save/Load** — Export and import pipelines as JSON files
 
-## Tech Stack
+## Packages
 
-- Nuxt 3 / Vue 3 + TypeScript
-- Vue Flow (node graph editor)
-- Tailwind CSS 4
-- Hugging Face Transformers.js (AI models)
-- WebGPU + WGSL shaders
-- Pinia (state management)
+| Package | Description |
+|---------|-------------|
+| [`packages/runtime`](packages/runtime/) | Standalone pipeline runtime, published as [`pipemagic`](https://www.npmjs.com/package/pipemagic) on npm. Framework-agnostic — use it in any web app to run image processing pipelines. |
+| [`packages/example`](packages/example/) | Minimal demo app ([live](https://mo1app.github.io/pipemagic/example/)). Vanilla Vite + TypeScript, ~180 lines. Drop an image and it runs the full sticker pipeline. |
+| `app/` | The main PipeMagic editor UI — Nuxt 3 / Vue 3 app with Vue Flow, Pinia, and Tailwind CSS. Imports the runtime from `pipemagic`. |
+| `shared/types/` | TypeScript type definitions shared between the editor and the runtime. |
+
+## Using the runtime in your own app
+
+```sh
+npm install pipemagic
+```
+
+```ts
+import { PipeMagic } from 'pipemagic'
+
+const pm = new PipeMagic()
+const result = await pm.run(pipeline, imageFile)
+// result.blob → output PNG
+```
+
+See the [runtime README](packages/runtime/README.md) for the full API and node type docs.
 
 ## Running locally
 
@@ -33,13 +48,14 @@ yarn dev
 
 Open [http://localhost:3003](http://localhost:3003).
 
-## Build
+To run the example app:
 
 ```bash
-yarn generate
+yarn build:runtime
+yarn dev:example
 ```
 
-Static output goes to `.output/public/`.
+Open [http://localhost:3005](http://localhost:3005).
 
 ## License
 
