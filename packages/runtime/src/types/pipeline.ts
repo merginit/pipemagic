@@ -1,4 +1,4 @@
-export type NodeType = 'input' | 'output' | 'remove-bg' | 'normalize' | 'upscale' | 'outline'
+export type NodeType = 'input' | 'output' | 'remove-bg' | 'normalize' | 'upscale' | 'outline' | 'depth'
 
 export interface NodePosition {
   x: number

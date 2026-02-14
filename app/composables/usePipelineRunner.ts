@@ -12,6 +12,7 @@ import {
   executeUpscale,
   executeNormalize,
   executeOutline,
+  executeDepth,
 } from 'pipemagic'
 import type {
   NodeType,
@@ -27,6 +28,7 @@ const executors: Record<string, NodeExecutor> = {
   'normalize': executeNormalize,
   'upscale': executeUpscale,
   'outline': executeOutline,
+  'depth': executeDepth,
 }
 
 export function usePipelineRunner() {

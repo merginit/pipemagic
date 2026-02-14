@@ -52,6 +52,7 @@ export type {
   UpscaleParams,
   NormalizeParams,
   OutlineParams,
+  DepthParams,
   NodeParamsMap,
 } from './types'
 export { createDefaultNodeState, DEFAULT_PARAMS } from './types'
@@ -87,3 +88,4 @@ export { executeRemoveBg } from './executors/remove-bg'
 export { executeNormalize } from './executors/normalize'
 export { executeUpscale } from './executors/upscale'
 export { executeOutline } from './executors/outline'
+export { executeDepth } from './executors/depth'

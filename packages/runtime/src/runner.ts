@@ -10,6 +10,7 @@ import { executeRemoveBg } from './executors/remove-bg'
 import { executeUpscale } from './executors/upscale'
 import { executeNormalize } from './executors/normalize'
 import { executeOutline } from './executors/outline'
+import { executeDepth } from './executors/depth'
 
 export type NodeExecutor = (
   ctx: ExecutionContext,
@@ -22,6 +23,7 @@ const executors: Record<string, NodeExecutor> = {
   'normalize': executeNormalize,
   'upscale': executeUpscale,
   'outline': executeOutline,
+  'depth': executeDepth,
 }
 
 export interface RunOptions {

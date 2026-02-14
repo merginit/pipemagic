@@ -23,6 +23,7 @@ const result = await pm.run(
 - **Remove BG** — AI background removal using [RMBG-1.4](https://huggingface.co/briaai/RMBG-1.4) via Transformers.js (WebGPU / WASM)
 - **Normalize** — Auto-crop to content bounding box, center on square canvas with padding
 - **Outline** — Configurable outline via Jump Flooding Algorithm on WebGPU, with canvas fallback
+- **Estimate Depth** — Monocular depth estimation using [Depth Anything V2](https://huggingface.co/onnx-community/depth-anything-v2-small) via Transformers.js (WebGPU / WASM). Fast (~25 MB) and Quality (~40 MB) modes
 - **Upscale 2x** — Super-resolution with [WebSR](https://github.com/nicknbytes/websr) (Anime4K CNN models)
 - **Output** — Encode to PNG / JPEG / WebP
 

@@ -280,6 +280,33 @@ const statusClass = computed(() => {
           </label>
         </template>
 
+        <!-- Depth params -->
+        <template v-if="nodeType === 'depth' && params">
+          <label class="block text-xs">
+            <span class="text-gray-400">Model</span>
+            <select
+              :value="params.model || 'fast'"
+              class="w-full mt-1 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-gray-300 text-xs"
+              @change="updateParam('model', ($event.target as HTMLSelectElement).value)"
+            >
+              <option value="fast">Fast (~25 MB)</option>
+              <option value="quality">Quality (~40 MB)</option>
+            </select>
+          </label>
+          <label class="block text-xs">
+            <span class="text-gray-400">Device</span>
+            <select
+              :value="params.device"
+              class="w-full mt-1 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-gray-300 text-xs"
+              @change="updateParam('device', ($event.target as HTMLSelectElement).value)"
+            >
+              <option value="auto">Auto</option>
+              <option value="webgpu">WebGPU</option>
+              <option value="wasm">WASM</option>
+            </select>
+          </label>
+        </template>
+
         <!-- Outline params -->
         <template v-if="nodeType === 'outline' && params">
           <label class="block text-xs">

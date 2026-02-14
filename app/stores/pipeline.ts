@@ -123,6 +123,7 @@ export const usePipelineStore = defineStore('pipeline', () => {
       'normalize': 'Normalize',
       'upscale': 'Upscale 2x',
       'outline': 'Outline',
+      'depth': 'Estimate Depth',
     }
 
     nodes.value.push({

@@ -19,6 +19,7 @@ export type {
   UpscaleParams,
   NormalizeParams,
   OutlineParams,
+  DepthParams,
   NodeParamsMap,
 } from './types/node-params'
 export { DEFAULT_PARAMS } from './types/node-params'

@@ -33,6 +33,11 @@ export interface OutlineParams {
   threshold: number
 }
 
+export interface DepthParams {
+  model: 'fast' | 'quality'
+  device: 'webgpu' | 'wasm' | 'auto'
+}
+
 export type NodeParamsMap = {
   'input': InputNodeParams
   'output': OutputNodeParams
@@ -40,6 +45,7 @@ export type NodeParamsMap = {
   'normalize': NormalizeParams
   'upscale': UpscaleParams
   'outline': OutlineParams
+  'depth': DepthParams
 }
 
 export const DEFAULT_PARAMS: NodeParamsMap = {
@@ -49,4 +55,5 @@ export const DEFAULT_PARAMS: NodeParamsMap = {
   'normalize': { size: 1024, padding: 16 },
   'upscale': { model: 'cnn-2x-s', contentType: 'rl' },
   'outline': { thickness: 4, color: '#ffffff', opacity: 1, quality: 'medium', position: 'outside', threshold: 0 },
+  'depth': { model: 'fast', device: 'auto' },
 }

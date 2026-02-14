@@ -10,6 +10,7 @@ import {
   ArrowsPointingOutIcon,
   PaintBrushIcon,
   SparklesIcon,
+  EyeIcon,
 } from "@heroicons/vue/20/solid";
 import type { NodeType } from "~~/shared/types/pipeline";
 import { usePipelineStore } from "~/stores/pipeline";
@@ -198,11 +199,64 @@ const fileMenuItems = computed<MenuItem[]>(() => [
   },
 ]);
 
+function buildDepthMapPreset(): PipelineDefinition {
+  const inputId = nanoid(8);
+  const depthId = nanoid(8);
+  const outputId = nanoid(8);
+  return {
+    version: 1,
+    nodes: [
+      {
+        id: inputId,
+        type: "input",
+        position: { x: -20, y: 180 },
+        params: { maxSize: 2048, fit: "contain" },
+        label: "Image Input",
+      },
+      {
+        id: depthId,
+        type: "depth",
+        position: { x: 340, y: 240 },
+        params: { model: "fast", device: "auto" },
+        label: "Estimate Depth",
+      },
+      {
+        id: outputId,
+        type: "output",
+        position: { x: 680, y: 160 },
+        params: { ...DEFAULT_PARAMS["output"] },
+        label: "Output",
+      },
+    ],
+    edges: [
+      {
+        id: nanoid(8),
+        source: inputId,
+        sourceHandle: "output",
+        target: depthId,
+        targetHandle: "input",
+      },
+      {
+        id: nanoid(8),
+        source: depthId,
+        sourceHandle: "output",
+        target: outputId,
+        targetHandle: "input",
+      },
+    ],
+  };
+}
+
 const presetMenuItems = computed<MenuItem[]>(() => [
   {
     label: "Sticker",
     icon: SparklesIcon,
     action: () => loadPreset(buildStickerPreset),
+  },
+  {
+    label: "Depth Map",
+    icon: EyeIcon,
+    action: () => loadPreset(buildDepthMapPreset),
   },
 ]);
 
@@ -237,6 +291,11 @@ const addNodeItems = computed<MenuItem[]>(() => [
     label: "Upscale 2x",
     icon: ArrowsPointingOutIcon,
     action: () => addNodeAtCenter("upscale"),
+  },
+  {
+    label: "Estimate Depth",
+    icon: EyeIcon,
+    action: () => addNodeAtCenter("depth"),
   },
 ]);
 

@@ -18,6 +18,7 @@ import RemoveBgNode from '~/components/nodes/RemoveBgNode.vue'
 import UpscaleNode from '~/components/nodes/UpscaleNode.vue'
 import NormalizeNode from '~/components/nodes/NormalizeNode.vue'
 import OutlineNode from '~/components/nodes/OutlineNode.vue'
+import DepthNode from '~/components/nodes/DepthNode.vue'
 
 const nodeTypes = {
   'input': markRaw(InputNode),
@@ -26,6 +27,7 @@ const nodeTypes = {
   'normalize': markRaw(NormalizeNode),
   'upscale': markRaw(UpscaleNode),
   'outline': markRaw(OutlineNode),
+  'depth': markRaw(DepthNode),
 }
 
 const store = usePipelineStore()
@@ -61,6 +63,7 @@ const addableNodes: { type: NodeType; label: string }[] = [
   { type: 'normalize', label: 'Normalize' },
   { type: 'outline', label: 'Outline' },
   { type: 'upscale', label: 'Upscale 2x' },
+  { type: 'depth', label: 'Estimate Depth' },
 ]
 
 function onPaneContextMenu(event: MouseEvent) {
