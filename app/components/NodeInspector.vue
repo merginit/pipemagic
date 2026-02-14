@@ -307,6 +307,22 @@ const statusClass = computed(() => {
           </label>
         </template>
 
+        <!-- Face Parse params -->
+        <template v-if="nodeType === 'face-parse' && params">
+          <label class="block text-xs">
+            <span class="text-gray-400">Device</span>
+            <select
+              :value="params.device"
+              class="w-full mt-1 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-gray-300 text-xs"
+              @change="updateParam('device', ($event.target as HTMLSelectElement).value)"
+            >
+              <option value="auto">Auto</option>
+              <option value="webgpu">WebGPU</option>
+              <option value="wasm">WASM</option>
+            </select>
+          </label>
+        </template>
+
         <!-- Outline params -->
         <template v-if="nodeType === 'outline' && params">
           <label class="block text-xs">

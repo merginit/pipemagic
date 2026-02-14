@@ -19,6 +19,7 @@ import UpscaleNode from '~/components/nodes/UpscaleNode.vue'
 import NormalizeNode from '~/components/nodes/NormalizeNode.vue'
 import OutlineNode from '~/components/nodes/OutlineNode.vue'
 import DepthNode from '~/components/nodes/DepthNode.vue'
+import FaceParseNode from '~/components/nodes/FaceParseNode.vue'
 
 const nodeTypes = {
   'input': markRaw(InputNode),
@@ -28,6 +29,7 @@ const nodeTypes = {
   'upscale': markRaw(UpscaleNode),
   'outline': markRaw(OutlineNode),
   'depth': markRaw(DepthNode),
+  'face-parse': markRaw(FaceParseNode),
 }
 
 const store = usePipelineStore()
@@ -64,6 +66,7 @@ const addableNodes: { type: NodeType; label: string }[] = [
   { type: 'outline', label: 'Outline' },
   { type: 'upscale', label: 'Upscale 2x' },
   { type: 'depth', label: 'Estimate Depth' },
+  { type: 'face-parse', label: 'Face Parse' },
 ]
 
 function onPaneContextMenu(event: MouseEvent) {

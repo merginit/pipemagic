@@ -11,6 +11,7 @@ import {
   PaintBrushIcon,
   SparklesIcon,
   EyeIcon,
+  UserIcon,
 } from "@heroicons/vue/20/solid";
 import type { NodeType } from "~~/shared/types/pipeline";
 import { usePipelineStore } from "~/stores/pipeline";
@@ -296,6 +297,11 @@ const addNodeItems = computed<MenuItem[]>(() => [
     label: "Estimate Depth",
     icon: EyeIcon,
     action: () => addNodeAtCenter("depth"),
+  },
+  {
+    label: "Face Parse",
+    icon: UserIcon,
+    action: () => addNodeAtCenter("face-parse"),
   },
 ]);
 

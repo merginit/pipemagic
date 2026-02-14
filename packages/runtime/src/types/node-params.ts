@@ -38,6 +38,10 @@ export interface DepthParams {
   device: 'webgpu' | 'wasm' | 'auto'
 }
 
+export interface FaceParseParams {
+  device: 'webgpu' | 'wasm' | 'auto'
+}
+
 export type NodeParamsMap = {
   'input': InputNodeParams
   'output': OutputNodeParams
@@ -46,6 +50,7 @@ export type NodeParamsMap = {
   'upscale': UpscaleParams
   'outline': OutlineParams
   'depth': DepthParams
+  'face-parse': FaceParseParams
 }
 
 export const DEFAULT_PARAMS: NodeParamsMap = {
@@ -56,4 +61,5 @@ export const DEFAULT_PARAMS: NodeParamsMap = {
   'upscale': { model: 'cnn-2x-s', contentType: 'rl' },
   'outline': { thickness: 4, color: '#ffffff', opacity: 1, quality: 'medium', position: 'outside', threshold: 0 },
   'depth': { model: 'fast', device: 'auto' },
+  'face-parse': { device: 'auto' },
 }

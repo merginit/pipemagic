@@ -11,6 +11,7 @@ import { executeUpscale } from './executors/upscale'
 import { executeNormalize } from './executors/normalize'
 import { executeOutline } from './executors/outline'
 import { executeDepth } from './executors/depth'
+import { executeFaceParse } from './executors/face-parse'
 
 export type NodeExecutor = (
   ctx: ExecutionContext,
@@ -24,6 +25,7 @@ const executors: Record<string, NodeExecutor> = {
   'upscale': executeUpscale,
   'outline': executeOutline,
   'depth': executeDepth,
+  'face-parse': executeFaceParse,
 }
 
 export interface RunOptions {

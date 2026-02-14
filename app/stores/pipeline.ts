@@ -115,7 +115,7 @@ export const usePipelineStore = defineStore('pipeline', () => {
 
   function addNode(type: NodeType, position: { x: number; y: number }) {
     const id = nanoid(8)
-    const params = { ...(DEFAULT_PARAMS[type] as Record<string, unknown>) }
+    const params = { ...(DEFAULT_PARAMS[type] as unknown as Record<string, unknown>) }
     const labels: Record<NodeType, string> = {
       'input': 'Image Input',
       'output': 'Output',
@@ -124,6 +124,7 @@ export const usePipelineStore = defineStore('pipeline', () => {
       'upscale': 'Upscale 2x',
       'outline': 'Outline',
       'depth': 'Estimate Depth',
+      'face-parse': 'Face Parse',
     }
 
     nodes.value.push({

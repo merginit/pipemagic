@@ -53,6 +53,7 @@ export type {
   NormalizeParams,
   OutlineParams,
   DepthParams,
+  FaceParseParams,
   NodeParamsMap,
 } from './types'
 export { createDefaultNodeState, DEFAULT_PARAMS } from './types'
@@ -89,3 +90,4 @@ export { executeNormalize } from './executors/normalize'
 export { executeUpscale } from './executors/upscale'
 export { executeOutline } from './executors/outline'
 export { executeDepth } from './executors/depth'
+export { executeFaceParse } from './executors/face-parse'

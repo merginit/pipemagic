@@ -20,6 +20,7 @@ export type {
   NormalizeParams,
   OutlineParams,
   DepthParams,
+  FaceParseParams,
   NodeParamsMap,
 } from './types/node-params'
 export { DEFAULT_PARAMS } from './types/node-params'
