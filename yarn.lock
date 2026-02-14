@@ -4506,11 +4506,6 @@ pinia@^2.3.1:
     "@vue/devtools-api" "^6.6.3"
     vue-demi "^0.14.10"
 
-pipemagic@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/pipemagic/-/pipemagic-0.1.0.tgz#f4477a24a2ad8485f3c258346b102fe6a26c0c22"
-  integrity sha512-SXjIctC/Eio1yl3hJVFDaxWqw8rMd7t80hu5rz9YXx7uxkAhc7sP1h55s+zzF+75V4/SSYJ0ffcy12QINs2sdQ==
-
 pirates@^4.0.1:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.7.tgz#643b4a18c4257c8a65104b73f3049ce9a0a15e22"

@@ -26,7 +26,7 @@
     "nanoid": "^5.1.2",
     "nuxt": "^3.16.0",
     "pinia": "^2.3.1",
-    "pipemagic": "0.1.0",
+    "pipemagic": "0.1.2",
     "tailwindcss": "^4.1.18",
     "vue": "^3.5.13"
   },
