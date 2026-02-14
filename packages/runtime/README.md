@@ -12,7 +12,7 @@ View the [node based editor](https://pipemagic.mo1.app).
 npm install pipemagic
 ```
 
-Background removal requires `@huggingface/transformers` (optional peer dependency):
+AI nodes (remove-bg, depth, face-parse) require `@huggingface/transformers` (optional peer dependency):
 
 ```sh
 npm install @huggingface/transformers
@@ -84,6 +84,23 @@ Adds an outline around non-transparent content using Jump Flooding Algorithm (We
 | `position`  | `'outside' \| 'center' \| 'inside'` | `'outside'` | Outline placement       |
 | `threshold` | `number`                            | `0`         | Distance field offset   |
 
+### `depth`
+
+Monocular depth estimation using [Depth Anything V2](https://huggingface.co/onnx-community/depth-anything-v2-small) via transformers.js. Outputs a grayscale depth map. Requires `@huggingface/transformers`.
+
+| Param    | Type                           | Default  | Description        |
+| -------- | ------------------------------ | -------- | ------------------ |
+| `model`  | `'fast' \| 'quality'`          | `'fast'` | Model size (~25/~40 MB) |
+| `device` | `'webgpu' \| 'wasm' \| 'auto'` | `'auto'` | Inference device   |
+
+### `face-parse`
+
+Face segmentation into 19 classes (skin, eyes, brows, nose, mouth, lips, ears, hair, hat, neck, cloth, etc.) using [face-parsing](https://huggingface.co/Xenova/face-parsing) via transformers.js. Outputs a color-coded segmentation map. Requires `@huggingface/transformers`.
+
+| Param    | Type                           | Default  | Description      |
+| -------- | ------------------------------ | -------- | ---------------- |
+| `device` | `'webgpu' \| 'wasm' \| 'auto'` | `'auto'` | Inference device |
+
 ### `upscale`
 
 2x upscaling via [WebSR](https://github.com/nicknbytes/websr) (loaded from CDN at runtime). Requires WebGPU.
@@ -133,6 +150,8 @@ You can also use executors directly without a pipeline:
 import {
   executeRemoveBg,
   executeOutline,
+  executeDepth,
+  executeFaceParse,
   initGpu,
   getGpuDevice,
   createFrame,
@@ -158,7 +177,7 @@ const result = await executeRemoveBg(ctx, [inputFrame], {
 ## Browser Requirements
 
 - **WebGPU** — required for outline (JFA) and upscale (WebSR). Falls back to canvas for outline if unavailable.
-- **SharedArrayBuffer** — required by the ONNX runtime used in background removal. Your page needs these headers:
+- **SharedArrayBuffer** — required by the ONNX runtime used in AI nodes (remove-bg, depth, face-parse). Your page needs these headers:
   ```
   Cross-Origin-Embedder-Policy: require-corp
   Cross-Origin-Opener-Policy: same-origin
