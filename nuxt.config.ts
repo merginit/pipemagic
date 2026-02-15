@@ -13,7 +13,12 @@ export default defineNuxtConfig({
 
   modules: [
     '@pinia/nuxt',
+    '@nuxtjs/plausible',
   ],
+
+  plausible: {
+    domain: 'pipemagic.mo1.app',
+  },
 
   css: [
     '~/assets/css/main.css',

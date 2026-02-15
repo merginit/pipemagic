@@ -956,6 +956,16 @@
     vite-plugin-checker "^0.12.0"
     vue-bundle-renderer "^2.2.0"
 
+"@nuxtjs/plausible@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/plausible/-/plausible-3.0.0.tgz#1f18979b1d9a2a900ce61db970f959f2b7920d26"
+  integrity sha512-xegAqKaCz9o5x3ZOE3pCj0A6m2OyCdW/viw7B2l4WH1DbiJSUYpRGKNDT1W3zFamjC7k8T6Kxw76u7iKB/CDvg==
+  dependencies:
+    "@nuxt/kit" "^4.3.1"
+    "@plausible-analytics/tracker" "^0.4.4"
+    defu "^6.1.4"
+    ufo "^1.6.3"
+
 "@oxc-minify/binding-android-arm-eabi@0.112.0":
   version "0.112.0"
   resolved "https://registry.yarnpkg.com/@oxc-minify/binding-android-arm-eabi/-/binding-android-arm-eabi-0.112.0.tgz#db0caab1f03ed94c9a75850867be0d5ce8fcce51"
@@ -1376,6 +1386,11 @@
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
+
+"@plausible-analytics/tracker@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@plausible-analytics/tracker/-/tracker-0.4.4.tgz#135e67d722d3161bffd143274db25cf5b45f481b"
+  integrity sha512-fz0NOYUEYXtg1TBaPEEvtcBq3FfmLFuTe1VZw4M8sTWX129br5dguu3M15+plOQnc181ShYe67RfwhKgK89VnA==
 
 "@polka/url@^1.0.0-next.24":
   version "1.0.0-next.29"
