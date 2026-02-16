@@ -1,6 +1,14 @@
 import { PipeMagic } from 'pipemagic'
 import type { PipelineDefinition, NodeStatus } from 'pipemagic'
 
+// Plausible analytics — only injected when VITE_PLAUSIBLE_SRC is set at build time
+if (import.meta.env.VITE_PLAUSIBLE_SRC) {
+  const s = document.createElement('script')
+  s.defer = true
+  s.src = import.meta.env.VITE_PLAUSIBLE_SRC
+  document.head.appendChild(s)
+}
+
 // -- Sticker preset pipeline definition --
 
 const stickerPipeline: PipelineDefinition = {

@@ -32,9 +32,13 @@ jobs:
       - run: yarn generate
         env:
           NUXT_APP_BASE_URL: /
+          NUXT_PUBLIC_PLAUSIBLE_ENABLED: true
+          NUXT_PUBLIC_PLAUSIBLE_DOMAIN: pipemagic.mo1.app
 
       # Build the example app into the Nuxt output
       - run: cd packages/example && npx vite build --base /example/ --outDir ../../.output/public/example
+        env:
+          VITE_PLAUSIBLE_SRC: https://plausible.io/js/pa-GMkJi1WsUKis0zAKHBsTl.js
 
       - uses: actions/upload-pages-artifact@v3
         with:

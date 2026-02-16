@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   ],
 
   plausible: {
-    domain: 'pipemagic.mo1.app',
+    enabled: false,
   },
 
   css: [
