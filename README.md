@@ -1,6 +1,6 @@
 # PipeMagic
 
-Visual image processing pipeline editor that runs entirely in the browser. Build node-based pipelines to process images using AI models — no server required.
+Asset processing pipeline that runs entirely in the browser. Build pipelines with the [node-based editor](https://pipemagic.mo1.app/), then run them in your web app with the [`pipemagic`](https://www.npmjs.com/package/pipemagic) runtime. Supports AI models via WebGPU — no server required.
 
 **[Node Editor](https://pipemagic.mo1.app/)** · **[Example App](https://pipemagic.mo1.app/example/)** · **[npm Package](https://www.npmjs.com/package/pipemagic)**
 

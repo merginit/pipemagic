@@ -1,10 +1,6 @@
 # PipeMagic
 
-Browser-based image processing pipeline runtime. Chain together GPU-accelerated operations like background removal, normalization, outlining, and upscaling — no server required.
-
-Learn more at the official repo [PipeMagic](https://github.com/mo1app/pipemagic).
-
-View the [node based editor](https://pipemagic.mo1.app).
+Standalone runtime for [PipeMagic](https://github.com/mo1app/pipemagic). Build asset processing pipelines with the [node-based editor](https://pipemagic.mo1.app/), then run them in any web app with this package. Supports AI models via WebGPU — no server required.
 
 ## Install
 

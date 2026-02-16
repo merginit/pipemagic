@@ -11,11 +11,17 @@ const steps = [
 <template>
   <div class="h-full flex flex-col overflow-y-auto">
     <div class="p-4 space-y-4 text-xs text-gray-400 leading-relaxed">
-      <p>Open-source WebGPU asset processor with support for AI models.</p>
       <p>
-        Create processing pipelines using the node-based canvas. Then use the
-        standalone runtime to process assets in your web app.
-        <span class="text-gray-500">No backend needed.</span>
+        Asset processing pipeline that runs entirely in the browser. Build
+        pipelines with this editor, then run them in your web app with the
+        <a
+          href="https://www.npmjs.com/package/pipemagic"
+          target="_blank"
+          rel="noopener"
+          class="text-gray-300 hover:text-white transition-colors"
+        >pipemagic</a>
+        runtime.
+        <span class="text-gray-500">Supports AI models via WebGPU — no server required.</span>
       </p>
 
       <a
