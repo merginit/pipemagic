@@ -76,9 +76,9 @@ self.onmessage = async (e: MessageEvent) => {
 
       self.postMessage({ type: 'progress', progress: 0.3 })
 
-      const result = await segmenter(rawImage, {
-        threshold: params.threshold ?? 0.5,
-      })
+      const threshold = params.threshold ?? 0.5
+
+      const result = await segmenter(rawImage)
 
       self.postMessage({ type: 'progress', progress: 0.8 })
 
@@ -95,7 +95,7 @@ self.onmessage = async (e: MessageEvent) => {
           output[i * 4 + 1] = pixelData[i * 4 + 1]
           output[i * 4 + 2] = pixelData[i * 4 + 2]
           const maskVal = maskPixels[i * 4] ?? maskPixels[i] ?? 255
-          output[i * 4 + 3] = maskVal
+          output[i * 4 + 3] = maskVal >= threshold * 255 ? 255 : 0
         }
       } else {
         output.set(pixelData)
