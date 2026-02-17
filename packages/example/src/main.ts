@@ -24,7 +24,7 @@ const stickerPipeline: PipelineDefinition = {
       id: 'remove-bg',
       type: 'remove-bg',
       position: { x: 1, y: 0 },
-      params: { threshold: 0.5, device: 'auto', dtype: 'fp16' },
+      params: { device: 'auto', dtype: 'fp16' },
     },
     {
       id: 'normalize',

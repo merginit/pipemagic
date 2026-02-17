@@ -111,9 +111,7 @@ export async function executeRemoveBg(
 
   ctx.onProgress('', 0.3)
 
-  const result = await model(rawImage, {
-    threshold: (params.threshold as number) ?? 0.5,
-  })
+  const result = await model(rawImage)
 
   ctx.onProgress('', 0.8)
 

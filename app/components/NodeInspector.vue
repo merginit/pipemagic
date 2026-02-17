@@ -196,19 +196,6 @@ const statusClass = computed(() => {
             </select>
           </label>
           <label class="block text-xs">
-            <span class="text-gray-400">Threshold</span>
-            <input
-              type="range"
-              :value="params.threshold"
-              min="0"
-              max="1"
-              step="0.01"
-              class="w-full mt-1"
-              @input="updateParam('threshold', +($event.target as HTMLInputElement).value)"
-            >
-            <span class="text-gray-500 text-[10px]">{{ (params.threshold as number)?.toFixed(2) }}</span>
-          </label>
-          <label class="block text-xs">
             <span class="text-gray-400">Device</span>
             <select
               :value="params.device"

@@ -9,7 +9,6 @@ export interface OutputNodeParams {
 }
 
 export interface RemoveBgParams {
-  threshold: number
   device: 'webgpu' | 'wasm' | 'auto'
   dtype: 'fp32' | 'fp16' | 'q8'
 }
@@ -56,7 +55,7 @@ export type NodeParamsMap = {
 export const DEFAULT_PARAMS: NodeParamsMap = {
   'input': { maxSize: 2048, fit: 'contain' },
   'output': { format: 'png', quality: 0.92 },
-  'remove-bg': { threshold: 0.5, device: 'auto', dtype: 'fp16' },
+  'remove-bg': { device: 'auto', dtype: 'fp16' },
   'normalize': { size: 1024, padding: 16 },
   'upscale': { model: 'cnn-2x-s', contentType: 'rl' },
   'outline': { thickness: 4, color: '#ffffff', opacity: 1, quality: 'medium', position: 'outside', threshold: 0 },

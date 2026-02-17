@@ -76,9 +76,7 @@ self.onmessage = async (e: MessageEvent) => {
 
       self.postMessage({ type: 'progress', progress: 0.3 })
 
-      const result = await segmenter(rawImage, {
-        threshold: params.threshold ?? 0.5,
-      })
+      const result = await segmenter(rawImage)
 
       self.postMessage({ type: 'progress', progress: 0.8 })
 
