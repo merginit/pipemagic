@@ -16,10 +16,6 @@ const state = computed(() => store.getNodeState(props.id))
         <span>Model</span>
         <span class="text-gray-500">RMBG-1.4</span>
       </div>
-      <div class="flex justify-between">
-        <span>Threshold</span>
-        <span class="text-gray-500">{{ (data.params.threshold as number)?.toFixed(2) }}</span>
-      </div>
       <div v-if="state.status === 'error'" class="text-red-400 text-[10px] mt-1">
         {{ state.error }}
       </div>

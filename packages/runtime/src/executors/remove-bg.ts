@@ -111,8 +111,6 @@ export async function executeRemoveBg(
 
   ctx.onProgress('', 0.3)
 
-  const threshold = (params.threshold as number) ?? 0.5
-
   const result = await model(rawImage)
 
   ctx.onProgress('', 0.8)
@@ -132,8 +130,7 @@ export async function executeRemoveBg(
       output[i * 4 + 2] = src[i * 4 + 2]
       // Read mask value -- could be 1-channel or 4-channel
       const maskVal = maskChannels >= 4 ? maskPixels[i * maskChannels] : maskPixels[i]
-      // Apply threshold: binarize the soft mask so the slider actually controls edge hardness
-      output[i * 4 + 3] = (maskVal ?? 255) >= threshold * 255 ? 255 : 0
+      output[i * 4 + 3] = maskVal ?? 255
     }
   } else {
     output.set(src)

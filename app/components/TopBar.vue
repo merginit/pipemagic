@@ -87,7 +87,7 @@ function buildStickerPreset(): PipelineDefinition {
         id: removeBgId,
         type: "remove-bg",
         position: { x: 380, y: 180 },
-        params: { threshold: 0.5, device: "auto", dtype: "fp16" },
+        params: { device: "auto", dtype: "fp16" },
         label: "Remove BG",
       },
       {

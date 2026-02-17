@@ -189,7 +189,7 @@ export const usePipelineStore = defineStore('pipeline', () => {
         type: 'remove-bg',
         position: { x: 380, y: 180 },
         label: 'Remove BG',
-        data: { params: { threshold: 0.5, device: 'auto', dtype: 'fp16' } },
+        data: { params: { device: 'auto', dtype: 'fp16' } },
       },
       {
         id: normalizeId,
